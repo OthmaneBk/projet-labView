@@ -1,0 +1,13 @@
+footer{
+    display: none;
+    position: fixed;
+    text-align: end;
+    bottom: 0;
+    background-color: #ead308;
+    width: 100%;
+}
+
+.button-footer{
+    padding: 10px;
+    margin-right: 20px;
+}
