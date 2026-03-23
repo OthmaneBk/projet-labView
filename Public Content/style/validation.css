@@ -1,32 +1,239 @@
-.div-validation{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f9f5e7;
+}
+
+/* Header */
+.header {
+    background-color: #ead308;
+    padding: 20px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
     display: flex;
-    justify-content: end;
-    margin-top: 10px;
+    align-items: center;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.p-validation{
-    padding-right: 20px;
+.header-logo {
+    font-size: 3rem;
 }
 
-.img-validation{
-    height: 30%;
-    width: 30%;
-    animation: livraison 5s infinite;
+.header-text h1 {
+    font-size: 2rem;
+    color: #333;
 }
 
-.div-validation-img{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+.header-text p {
+    color: #555;
+    font-size: 1rem;
+    margin-top: 4px;
 }
 
-.span-validation {
-    font-weight: bold;    
+.header-cart {
     margin-left: auto;
-    margin-right: auto; 
-          
+    position: relative;
 }
-@keyframes livraison{
-    from {transform: translateX(-100vw);}
-    to {transform: translateX(100vw);}
+
+.cart-icon {
+    font-size: 2rem;
+}
+
+.header-cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #333;
+    color: white;
+    font-size: 0.72rem;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main */
+.main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.btn-retour {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.btn-retour:hover {
+    color: #333;
+}
+
+/* Section commande */
+.commande-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #ead308;
+}
+
+/* Table */
+#table-commande {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+#table-commande th {
+    background-color: #ead308;
+    color: #333;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+#table-commande td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+    font-size: 0.95rem;
+}
+
+#table-commande tr:last-child td {
+    border-bottom: none;
+}
+
+#table-commande tr:hover td {
+    background-color: #fdf8d0;
+}
+
+.td-nom {
+    font-weight: bold;
+    color: #333 !important;
+}
+
+.td-ingredients {
+    font-size: 0.82rem !important;
+    color: #888 !important;
+}
+
+.td-qte {
+    text-align: center;
+    font-weight: bold;
+}
+
+.td-total {
+    font-weight: bold;
+    color: #ead308 !important;
+    font-size: 1rem !important;
+}
+
+/* Total */
+.total-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+.total-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.total-prix {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #ead308;
+}
+
+/* Actions */
+.actions-section {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-finaliser {
+    padding: 12px 32px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-finaliser:hover {
+    background: #555;
+}
+
+.btn-finaliser:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+/* Confirmation */
+.confirmation {
+    background: white;
+    border-radius: 12px;
+    padding: 50px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.confirmation-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.confirmation-sub {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.img-livraison {
+    width: 35%;
+    animation: livraison 4s linear infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes livraison {
+    from { transform: translateX(-60vw); }
+    to   { transform: translateX(60vw); }
 }

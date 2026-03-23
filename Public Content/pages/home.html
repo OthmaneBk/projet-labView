@@ -1,24 +1,48 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="stylesheet" href="http://localhost:8000//WebService//style//table.css">
-    <link rel="stylesheet" href="http://localhost:8000//WebService//style//footer.css">
-    <script src="http://localhost:8000//WebService//js/commande.js"></script>
-    <script src="http://localhost:8000//WebService//js/data.js"></script>
-    <script src="http://localhost:8000//WebService//js/pizza.js"></script>
-    <script src="http://localhost:8000//WebService//js/route.js"></script>
-    
     <meta charset="UTF-8">
-    <title>Pizziria App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Bella Pizza</title>
+    <link rel="stylesheet" href="../style/home.css">
+    <script src="../js/data.js"></script>
+    <script src="../js/route.js"></script>
+    <script src="../js/pizza.js"></script>
+    <script src="../js/commande.js"></script>
 </head>
-<body onload="allpizza(); commande(); Footerdisplay();">
-    <table id="pizza-div"></table>
+<body onload="allpizza(); commande();">
 
-    <footer id="footer">
-        <button class="button-footer" id="button-commander" >
-            Commander
-        </button>
+    <header class="header">
+        <div class="header-content">
+            <span class="header-logo">🍕</span>
+            <div class="header-text">
+                <h1>La Bella Pizza</h1>
+                <p>Commandez votre pizza préférée</p>
+            </div>
+            <div class="header-cart" onclick="sauvegarderEtRediriger()">
+                <span class="cart-icon">🛒</span>
+                <span id="header-cart-count" class="header-cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2 class="hero-title">Des pizzas fraîches,<br>livrées chez vous</h2>
+            <p class="hero-subtitle">Choisissez parmi notre sélection de pizzas artisanales préparées avec des ingrédients frais</p>
+            <a href="#menu" class="hero-btn">Voir le menu</a>
+        </div>
+    </section>
+
+    <main class="main" id="menu">
+        <h2 class="menu-title">Notre Menu</h2>
+        <div id="pizza-div" class="pizza-grid"></div>
+    </main>
+
+    <footer id="footer" class="footer">
+        <span id="cart-count" class="cart-count">0 pizza(s) sélectionnée(s)</span>
+        <button class="button-footer" id="button-commander">Commander →</button>
     </footer>
+
 </body>
 </html>

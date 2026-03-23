@@ -1,20 +1,65 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizziria App</title>
-    <script src="http://localhost:8000//WebService//js/validation.js"></script>
-    <link rel="stylesheet" href="http://localhost:8000//WebService//style//validation.css">
-    <link rel="stylesheet" href="http://localhost:8000//WebService//style//table.css">
+    <title>La Bella Pizza — Commande</title>
+    <link rel="stylesheet" href="../style/validation.css">
+    <script src="../js/data.js"></script>
+    <script src="../js/route.js"></script>
+    <script src="../js/validation.js"></script>
 </head>
-<body onload="validation(); finaliser(); divfinaliser();">
-    <h1>Récapitulatif de votre commande</h1>
-    <table id="validation"></table>
-    <div class="div-validation">
-        <p id="p" class="p-validation"></p>
-        <button id="id-button">Finaliser la commande</button>
-    </div>
-    <div id="div-validation" class="div-validation-img"></div>
-    
+<body onload="afficherCommande();">
+
+    <header class="header">
+        <div class="header-content">
+            <span class="header-logo">🍕</span>
+            <div class="header-text">
+                <h1>La Bella Pizza</h1>
+                <p>Récapitulatif de votre commande</p>
+            </div>
+            <div class="header-cart">
+                <span class="cart-icon">🛒</span>
+                <span id="header-cart-count" class="header-cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <a href="home.html" class="btn-retour">← Modifier ma commande</a>
+
+        <section class="commande-section">
+            <h2 class="section-title">Votre commande</h2>
+            <table id="table-commande">
+                <thead>
+                    <tr>
+                        <th>Pizza</th>
+                        <th>Taille</th>
+                        <th>Prix unitaire</th>
+                        <th>Ingrédients</th>
+                        <th>Quantité</th>
+                        <th>Sous-total</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-commande"></tbody>
+            </table>
+
+            <div class="total-section">
+                <span class="total-label">Total</span>
+                <span id="total-prix" class="total-prix">0.00 €</span>
+            </div>
+
+            <div class="actions-section">
+                <button id="btn-finaliser" class="btn-finaliser">Finaliser la commande</button>
+            </div>
+        </section>
+
+        <div id="confirmation" class="confirmation hidden">
+            <p class="confirmation-text">Votre commande a été passée avec succès !</p>
+            <p class="confirmation-sub">Votre livraison prend un maximum de 2 jours.</p>
+            <img src="../images/image.png" class="img-livraison" title="Livreur en route" alt="Livraison">
+        </div>
+    </main>
+
 </body>
 </html>
