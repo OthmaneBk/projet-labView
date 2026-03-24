@@ -7,18 +7,27 @@
     <link rel="stylesheet" href="../style/home.css">
     <script src="../js/data.js"></script>
     <script src="../js/route.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/pizza.js"></script>
     <script src="../js/commande.js"></script>
 </head>
-<body onload="allpizza(); commande();">
+<body onload="allpizza(); commande(); afficherUtilisateurHeader();">
 
     <header class="header">
         <div class="header-content">
-            <span class="header-logo">🍕</span>
-            <div class="header-text">
-                <h1>La Bella Pizza</h1>
-                <p>Commandez votre pizza préférée</p>
-            </div>
+            <a href="home.html" class="header-brand">
+                <span class="header-logo">🍕</span>
+                <div class="header-text">
+                    <h1>La Bella Pizza</h1>
+                    <p>Commandez votre pizza préférée</p>
+                </div>
+            </a>
+            <nav class="header-nav">
+                <a href="home.html" class="nav-link active">Accueil</a>
+                <a href="login.html" class="nav-link" id="nav-login">Se connecter</a>
+                <span id="header-user" class="nav-user"></span>
+                <button onclick="deconnecter()" class="nav-logout" id="nav-logout">Déconnexion</button>
+            </nav>
             <div class="header-cart" onclick="sauvegarderEtRediriger()">
                 <span class="cart-icon">🛒</span>
                 <span id="header-cart-count" class="header-cart-badge">0</span>
@@ -34,15 +43,52 @@
         </div>
     </section>
 
+    <section class="apropos">
+        <div class="apropos-content">
+            <h2 class="apropos-title">À propos de La Bella Pizza</h2>
+            <div class="apropos-grid">
+                <div class="apropos-card">
+                    <h3>Ingrédients frais</h3>
+                    <p>Tous nos ingrédients sont sélectionnés chaque matin auprès de producteurs locaux.</p>
+                </div>
+                <div class="apropos-card">
+                    <h3>Recettes artisanales</h3>
+                    <p>Nos pizzas sont préparées à la main selon des recettes traditionnelles italiennes.</p>
+                </div>
+                <div class="apropos-card">
+                    <h3>Livraison rapide</h3>
+                    <p>Votre pizza livrée en moins de 30 minutes, chaude et prête à déguster.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <main class="main" id="menu">
         <h2 class="menu-title">Notre Menu</h2>
         <div id="pizza-div" class="pizza-grid"></div>
     </main>
 
-    <footer id="footer" class="footer">
+
+    <footer class="site-footer">
+        <div class="site-footer-content">
+            <div class="footer-brand">
+                <span>🍕</span>
+                <span>La Bella Pizza</span>
+            </div>
+            <div class="footer-links">
+                <a href="home.html">Accueil</a>
+                <a href="login.html">Connexion</a>
+                <a href="register.html">Inscription</a>
+            </div>
+            <p class="footer-copy">© 2024 La Bella Pizza — Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <div id="footer" class="footer">
         <span id="cart-count" class="cart-count">0 pizza(s) sélectionnée(s)</span>
         <button class="button-footer" id="button-commander">Commander →</button>
-    </footer>
+    </div>
 
 </body>
 </html>

@@ -40,9 +40,12 @@ function afficherCommande() {
         btn.disabled = true;
         btn.textContent = "Envoi en cours...";
 
-        await posterCommande(pizzas);
+        const result = await posterCommande(pizzas);
 
         btn.textContent = "Commande envoyée !";
+        if (result.id_commande) {
+            document.getElementById("id-commande").textContent = "#" + result.id_commande;
+        }
         document.getElementById("confirmation").classList.remove("hidden");
         document.querySelector(".commande-section").classList.add("hidden");
         localStorage.clear();

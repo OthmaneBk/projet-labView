@@ -39,8 +39,64 @@ body {
     margin-top: 4px;
 }
 
-.header-cart {
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-left: auto;
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.nav-link:hover {
+    background: rgba(0,0,0,0.1);
+}
+
+.nav-user {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 6px;
+}
+
+.nav-logout {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: none;
+}
+
+.nav-logout:hover {
+    background: #555;
+}
+
+.header-cart {
+    margin-left: 0;
     position: relative;
 }
 
@@ -212,22 +268,76 @@ body {
 }
 
 .confirmation-text {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
 }
 
-.confirmation-sub {
+.confirmation-id {
     font-size: 1rem;
-    color: #888;
+    color: #777;
+    margin-bottom: 24px;
+}
+
+.confirmation-id span {
+    font-weight: bold;
+    color: #ead308;
+}
+
+.livraison-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: #f9f5e7;
+    border: 2px solid #ead308;
+    border-radius: 10px;
+    padding: 14px 24px;
     margin-bottom: 30px;
+    text-align: left;
+}
+
+.livraison-icon {
+    font-size: 2rem;
+}
+
+.livraison-titre {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #aaa;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.livraison-delai {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
 }
 
 .img-livraison {
+    display: block;
     width: 35%;
+    margin: 0 auto 24px;
     animation: livraison 4s linear infinite;
 }
+
+.btn-retour-home {
+    display: inline-block;
+    padding: 12px 28px;
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-retour-home:hover {
+    background: #555;
+}
+
 
 .hidden {
     display: none;
