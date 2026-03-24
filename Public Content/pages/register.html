@@ -9,7 +9,7 @@
     <script src="../js/route.js"></script>
     <script src="../js/auth.js"></script>
 </head>
-<body>
+<body onload="initRegister();">
 
     <header class="header">
         <div class="header-content">
@@ -31,6 +31,7 @@
         <div class="auth-card">
             <h2 class="auth-title">Inscription</h2>
 
+            <p id="success-msg" class="success-msg hidden"></p>
             <p id="error-msg" class="error-msg hidden"></p>
 
             <form id="register-form" onsubmit="handleRegister(event);">

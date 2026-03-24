@@ -3,11 +3,19 @@
 // ----------------------------------------------------------------
 
 function getUtilisateur() {
-    return JSON.parse(localStorage.getItem("utilisateur"));
+    try {
+        return JSON.parse(localStorage.getItem("utilisateur"));
+    } catch (e) {
+        return null;
+    }
 }
 
 function estConnecte() {
     return getUtilisateur() !== null;
+}
+
+function sauvegarderSession(utilisateur) {
+    localStorage.setItem("utilisateur", JSON.stringify(utilisateur));
 }
 
 function deconnecter() {
@@ -36,9 +44,20 @@ function afficherUtilisateurHeader() {
 
 // Appelé au chargement de login.html
 function initLogin() {
+    if (estConnecte()) {
+        window.location.href = "home.html";
+        return;
+    }
     const params = new URLSearchParams(window.location.search);
     if (params.get("registered") === "1") {
         afficherSucces("Compte créé avec succès ! Connectez-vous.");
+    }
+}
+
+// Appelé au chargement de register.html
+function initRegister() {
+    if (estConnecte()) {
+        window.location.href = "home.html";
     }
 }
 
@@ -48,19 +67,28 @@ function initLogin() {
 
 async function handleLogin(e) {
     e.preventDefault();
-    const email = document.getElementById("email").value.trim();
+    const email    = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+    const btn      = e.target.querySelector("button[type=submit]");
 
     cacherErreur();
+    cacherSucces();
+    btn.disabled = true;
 
-    const result = await login(email, password);
+    try {
+        const result = await login(email, password);
 
-    if (result.success) {
-        localStorage.setItem("utilisateur", JSON.stringify(result.utilisateur));
-        const panier = JSON.parse(localStorage.getItem("panier")) || [];
-        window.location.href = panier.length > 0 ? "validation.html" : "home.html";
-    } else {
-        afficherErreur(result.message || "Email ou mot de passe incorrect");
+        if (result.success) {
+            sauvegarderSession(result.utilisateur);
+            const panier = JSON.parse(localStorage.getItem("panier")) || [];
+            window.location.href = panier.length > 0 ? "validation.html" : "home.html";
+        } else {
+            afficherErreur(result.message || "Email ou mot de passe incorrect");
+        }
+    } catch (err) {
+        afficherErreur("Impossible de contacter le serveur. Réessayez.");
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -77,6 +105,7 @@ async function handleRegister(e) {
     const adresse   = document.getElementById("adresse").value.trim();
     const password  = document.getElementById("password").value;
     const confirm   = document.getElementById("confirm").value;
+    const btn       = e.target.querySelector("button[type=submit]");
 
     cacherErreur();
 
@@ -85,12 +114,20 @@ async function handleRegister(e) {
         return;
     }
 
-    const result = await register(nom, prenom, email, password, telephone, adresse);
+    btn.disabled = true;
 
-    if (result.success) {
-        window.location.href = "login.html?registered=1";
-    } else {
-        afficherErreur(result.message || "Erreur lors de l'inscription");
+    try {
+        const result = await register(nom, prenom, email, password, telephone, adresse);
+
+        if (result.success) {
+            window.location.href = "login.html?registered=1";
+        } else {
+            afficherErreur(result.message || "Erreur lors de l'inscription");
+        }
+    } catch (err) {
+        afficherErreur("Impossible de contacter le serveur. Réessayez.");
+    } finally {
+        btn.disabled = false;
     }
 }
 
@@ -99,6 +136,7 @@ async function handleRegister(e) {
 // ----------------------------------------------------------------
 
 function afficherErreur(message) {
+    cacherSucces();
     const el = document.getElementById("error-msg");
     if (!el) return;
     el.textContent = message;
@@ -111,10 +149,16 @@ function cacherErreur() {
     el.style.display = "none";
 }
 
-// Affiche un message de succès (ex: après inscription)
 function afficherSucces(message) {
+    cacherErreur();
     const el = document.getElementById("success-msg");
     if (!el) return;
     el.textContent = message;
     el.style.display = "block";
+}
+
+function cacherSucces() {
+    const el = document.getElementById("success-msg");
+    if (!el) return;
+    el.style.display = "none";
 }
