@@ -140,13 +140,13 @@ function afficherErreur(message) {
     const el = document.getElementById("error-msg");
     if (!el) return;
     el.textContent = message;
-    el.style.display = "block";
+    el.classList.remove("hidden");
 }
 
 function cacherErreur() {
     const el = document.getElementById("error-msg");
     if (!el) return;
-    el.style.display = "none";
+    el.classList.add("hidden");
 }
 
 function afficherSucces(message) {
@@ -154,11 +154,11 @@ function afficherSucces(message) {
     const el = document.getElementById("success-msg");
     if (!el) return;
     el.textContent = message;
-    el.style.display = "block";
+    el.classList.remove("hidden");
 }
 
 function cacherSucces() {
     const el = document.getElementById("success-msg");
     if (!el) return;
-    el.style.display = "none";
+    el.classList.add("hidden");
 }
