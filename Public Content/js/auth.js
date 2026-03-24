@@ -141,12 +141,14 @@ function afficherErreur(message) {
     if (!el) return;
     el.textContent = message;
     el.classList.remove("hidden");
+    el.style.display = "block";
 }
 
 function cacherErreur() {
     const el = document.getElementById("error-msg");
     if (!el) return;
     el.classList.add("hidden");
+    el.style.display = "none";
 }
 
 function afficherSucces(message) {
@@ -155,10 +157,12 @@ function afficherSucces(message) {
     if (!el) return;
     el.textContent = message;
     el.classList.remove("hidden");
+    el.style.display = "block";
 }
 
 function cacherSucces() {
     const el = document.getElementById("success-msg");
     if (!el) return;
     el.classList.add("hidden");
+    el.style.display = "none";
 }

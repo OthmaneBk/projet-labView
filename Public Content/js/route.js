@@ -78,7 +78,13 @@ async function login(email, password) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
     });
-    return await response.json();
+    const data = await response.json();
+    console.log("[login] statut HTTP :", response.status, "| réponse :", data);
+    if (response.ok) {
+        const utilisateur = data.utilisateur || data;
+        return { success: true, utilisateur };
+    }
+    return { success: false, message: data.message || "Email ou mot de passe incorrect" };
 }
 
 // POST /register
@@ -91,5 +97,10 @@ async function register(nom, prenom, email, password, telephone, adresse) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nom, prenom, telephone, email, adresse, password })
     });
-    return await response.json();
+    const data = await response.json();
+    console.log("[register] statut HTTP :", response.status, "| réponse :", data);
+    if (response.ok) {
+        return { success: true };
+    }
+    return { success: false, message: data.message || "Erreur lors de l'inscription" };
 }
