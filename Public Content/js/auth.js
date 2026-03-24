@@ -78,7 +78,7 @@ async function handleLogin(e) {
     try {
         const result = await login(email, password);
 
-        if (result.success) {
+        if (result.message==="login réussi") {
             sauvegarderSession(result.utilisateur);
             const panier = JSON.parse(localStorage.getItem("panier")) || [];
             window.location.href = panier.length > 0 ? "validation.html" : "home.html";
