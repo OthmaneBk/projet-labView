@@ -6,7 +6,7 @@ function allpizza() {
 
     getAllpizzas().then(pizzas => {
         pizzasChargees = pizzas;
-        pizzas.forEach(pizza => {
+        pizzas.forEach((pizza,index) => {
             const pizzaTrouver = panierStocke.find(item => item.id_pizza === pizza.id_pizza);
             const quantiteInitiale = pizzaTrouver ? pizzaTrouver.quantite : 0;
 
@@ -24,14 +24,13 @@ function allpizza() {
                 <div class="pizza-icon">🍕</div>
                 <h3 class="pizza-name">${pizza.nom_pizza}</h3>
                 <span class="pizza-size">${pizza.taille}</span>
-                <span class="pizza-price">${pizza.prix.toFixed(2)} €</span>
                 <div class="pizza-ingredients">
                     <p class="ingredients-label">Ingrédients</p>
                     <ul class="ingredients-list">${ingredientsHTML}</ul>
                 </div>
                 <div class="pizza-actions">
                     <button class="btn-moins">−</button>
-                    <span class="pizza-quantite" id="span ${pizza.id_pizza}">${quantiteInitiale}</span>
+                    <span class="pizza-quantite" id="span ${index}">${quantiteInitiale}</span>
                     <button class="btn-plus">+</button>
                 </div>
             `;
