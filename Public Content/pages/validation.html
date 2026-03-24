@@ -7,17 +7,26 @@
     <link rel="stylesheet" href="../style/validation.css">
     <script src="../js/data.js"></script>
     <script src="../js/route.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/validation.js"></script>
 </head>
-<body onload="afficherCommande();">
+<body onload="afficherCommande(); afficherUtilisateurHeader();">
 
     <header class="header">
         <div class="header-content">
-            <span class="header-logo">🍕</span>
-            <div class="header-text">
-                <h1>La Bella Pizza</h1>
-                <p>Récapitulatif de votre commande</p>
-            </div>
+            <a href="home.html" class="header-brand">
+                <span class="header-logo">🍕</span>
+                <div class="header-text">
+                    <h1>La Bella Pizza</h1>
+                    <p>Récapitulatif de votre commande</p>
+                </div>
+            </a>
+            <nav class="header-nav">
+                <a href="home.html" class="nav-link">Accueil</a>
+                <a href="login.html" class="nav-link" id="nav-login">Se connecter</a>
+                <span id="header-user" class="nav-user"></span>
+                <button onclick="deconnecter()" class="nav-logout" id="nav-logout">Déconnexion</button>
+            </nav>
             <div class="header-cart">
                 <span class="cart-icon">🛒</span>
                 <span id="header-cart-count" class="header-cart-badge">0</span>
@@ -56,10 +65,19 @@
 
         <div id="confirmation" class="confirmation hidden">
             <p class="confirmation-text">Votre commande a été passée avec succès !</p>
-            <p class="confirmation-sub">Votre livraison prend un maximum de 2 jours.</p>
+            <p class="confirmation-id">Numéro de commande : <span id="id-commande"></span></p>
+            <div class="livraison-banner">
+                <span class="livraison-icon">🚚</span>
+                <div>
+                    <p class="livraison-titre">Livraison estimée</p>
+                    <p class="livraison-delai">Maximum 30 minutes</p>
+                </div>
+            </div>
             <img src="../images/image.png" class="img-livraison" title="Livreur en route" alt="Livraison">
+            <a href="home.html" class="btn-retour-home">Passer une nouvelle commande</a>
         </div>
     </main>
+
 
 </body>
 </html>

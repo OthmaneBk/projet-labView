@@ -1,0 +1,113 @@
+================================================================
+GUIDE D'INTEGRATION BACKEND - La Bella Pizza
+================================================================
+
+FICHIER A MODIFIER : Public Content/js/route.js
+(C'est le seul fichier a toucher pour brancher le backend)
+
+----------------------------------------------------------------
+ETAPE 1 — Configurer l'URL du serveur LabVIEW
+----------------------------------------------------------------
+
+Changer la ligne :
+    const API_URL = "http://localhost:8000/";
+
+Par l'IP de la machine LabVIEW :
+    const API_URL = "http://172.20.10.2:8000/";
+
+
+----------------------------------------------------------------
+ETAPE 2 — Endpoints a implementer cote LabVIEW
+----------------------------------------------------------------
+
+GET  /pizzas
+    Retourne la liste des pizzas au format JSON :
+    [
+        {
+            "id_pizza": 1,
+            "nom_pizza": "Margherita",
+            "taille": "Medium",
+            "prix": 10.50,
+            "ingredients": "Sauce tomate, Mozzarella, Basilic"
+        },
+        ...
+    ]
+    Note : ingredients peut etre une chaine de caracteres ou un tableau.
+
+POST /commande
+    Recoit la commande au format JSON :
+    [
+        {
+            "id_pizza": 1,
+            "nom_pizza": "Margherita",
+            "taille": "Medium",
+            "prix": 10.50,
+            "ingredients": [...],
+            "quantite": 2
+        },
+        ...
+    ]
+    Retourne :
+    { "success": true, "id_commande": 1234 }
+
+POST /login
+    Recoit :
+    { "email": "...", "password": "..." }
+    Retourne si succes :
+    { "success": true, "utilisateur": { "nom": "...", "email": "...", "token": "..." } }
+    Retourne si echec :
+    { "success": false, "message": "Email ou mot de passe incorrect" }
+
+POST /register
+    Recoit :
+    { "nom": "...", "email": "...", "password": "..." }
+    Retourne si succes :
+    { "success": true }
+    Retourne si echec :
+    { "success": false, "message": "..." }
+
+GET  /commande/:id
+    Retourne le statut d'une commande :
+    { "id_commande": 1234, "statut": "Attente" }
+    Valeurs possibles pour statut : Attente | Preparation | Cuisson | Termine
+
+
+----------------------------------------------------------------
+ETAPE 3 — Remplacer les mocks dans route.js
+----------------------------------------------------------------
+
+Pour chaque fonction, decommenter le bloc fetch() et supprimer
+la ligne Promise.resolve(...).
+
+Exemple pour getAllpizzas() :
+
+    AVANT (mock) :
+        return Promise.resolve(PIZZAS_MOCK);
+
+    APRES (reel) :
+        const response = await fetch(API_URL + "pizzas");
+        return await response.json();
+
+
+----------------------------------------------------------------
+ETAPE 4 — CORS (si probleme de connexion)
+----------------------------------------------------------------
+
+Si le navigateur bloque les requetes, ajouter dans LabVIEW
+les headers HTTP suivants dans chaque reponse :
+
+    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Methods: GET, POST
+    Access-Control-Allow-Headers: Content-Type
+
+
+----------------------------------------------------------------
+RESUME
+----------------------------------------------------------------
+
+1. Changer API_URL dans route.js
+2. Implementer les endpoints dans LabVIEW (GET /pizzas, POST /commande, POST /login, POST /register)
+3. Decommenter les fetch() dans route.js
+4. Tester chaque endpoint
+
+================================================================

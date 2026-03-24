@@ -40,8 +40,64 @@ body {
     margin-top: 4px;
 }
 
-.header-cart {
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-left: auto;
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(0,0,0,0.1);
+}
+
+.nav-user {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 6px;
+}
+
+.nav-logout {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: none;
+}
+
+.nav-logout:hover {
+    background: #555;
+}
+
+.header-cart {
+    margin-left: 0;
     position: relative;
     cursor: pointer;
 }
@@ -251,7 +307,98 @@ body {
     color: #333;
 }
 
-/* Footer */
+/* A propos */
+.apropos {
+    background: white;
+    padding: 60px 30px;
+}
+
+.apropos-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.apropos-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    text-align: center;
+
+}
+
+.apropos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.apropos-card {
+    background: #f9f5e7;
+    border-radius: 10px;
+    padding: 24px 20px;
+
+}
+
+.apropos-card h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.apropos-card p {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.6;
+}
+
+/* Site Footer */
+.site-footer {
+    background: #333;
+    color: white;
+    padding: 30px;
+}
+
+.site-footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #ead308;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Cart Footer (sticky) */
 .footer {
     display: none;
     position: fixed;
