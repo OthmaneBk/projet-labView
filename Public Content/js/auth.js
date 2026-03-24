@@ -25,7 +25,8 @@ function afficherUtilisateurHeader() {
     if (user) {
         if (navLogin) navLogin.style.display = "none";
         if (navLogout) navLogout.style.display = "inline-block";
-        if (headerUser) headerUser.textContent = "Bonjour, " + user.nom;
+        const affichage = user.prenom ? user.prenom : user.nom;
+        if (headerUser) headerUser.textContent = "Bonjour, " + affichage;
     } else {
         if (navLogin) navLogin.style.display = "inline-block";
         if (navLogout) navLogout.style.display = "none";
@@ -69,10 +70,13 @@ async function handleLogin(e) {
 
 async function handleRegister(e) {
     e.preventDefault();
-    const nom = document.getElementById("nom").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirm").value;
+    const nom       = document.getElementById("nom").value.trim();
+    const prenom    = document.getElementById("prenom").value.trim();
+    const email     = document.getElementById("email").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const adresse   = document.getElementById("adresse").value.trim();
+    const password  = document.getElementById("password").value;
+    const confirm   = document.getElementById("confirm").value;
 
     cacherErreur();
 
@@ -81,7 +85,7 @@ async function handleRegister(e) {
         return;
     }
 
-    const result = await register(nom, email, password);
+    const result = await register(nom, prenom, email, password, telephone, adresse);
 
     if (result.success) {
         window.location.href = "login.html?registered=1";

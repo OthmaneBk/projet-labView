@@ -43,9 +43,37 @@ function afficherCommande() {
         const result = await posterCommande(pizzas);
 
         btn.textContent = "Commande envoyée !";
+
         if (result.id_commande) {
             document.getElementById("id-commande").textContent = "#" + result.id_commande;
         }
+
+        // Date et heure
+        const maintenant = new Date();
+        document.getElementById("recap-date").textContent = maintenant.toLocaleDateString("fr-FR");
+        document.getElementById("recap-heure").textContent = maintenant.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+
+        // Client
+        const user = getUtilisateur();
+        document.getElementById("recap-client").textContent = user ? user.prenom + " " + user.nom : "-";
+
+        // Lignes pizzas
+        const recapTbody = document.getElementById("recap-tbody");
+        let recapTotal = 0;
+        pizzas.forEach(p => {
+            const sousTotal = p.prix * p.quantite;
+            recapTotal += sousTotal;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${p.nom_pizza}</td>
+                <td>${p.taille}</td>
+                <td>${p.quantite}</td>
+                <td>${sousTotal.toFixed(2)} €</td>
+            `;
+            recapTbody.appendChild(tr);
+        });
+        document.getElementById("recap-total").textContent = recapTotal.toFixed(2) + " €";
+
         document.getElementById("confirmation").classList.remove("hidden");
         document.querySelector(".commande-section").classList.add("hidden");
         localStorage.clear();

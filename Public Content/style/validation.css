@@ -285,6 +285,81 @@ body {
     color: #ead308;
 }
 
+/* Recap commande dans la confirmation */
+.recap-commande {
+    background: #f9f5e7;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.recap-meta {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #e0d88a;
+}
+
+.recap-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.recap-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #aaa;
+    letter-spacing: 0.05em;
+}
+
+.recap-value {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.recap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+}
+
+.recap-table th {
+    background: #ead308;
+    color: #333;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 0.82rem;
+}
+
+.recap-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e8e2c4;
+    color: #444;
+}
+
+.recap-table tr:last-child td {
+    border-bottom: none;
+}
+
+.recap-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 2px solid #e0d88a;
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #333;
+}
+
+.recap-total span:last-child {
+    color: #ead308;
+}
+
 .livraison-banner {
     display: inline-flex;
     align-items: center;

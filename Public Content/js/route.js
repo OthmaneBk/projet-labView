@@ -9,7 +9,9 @@ const API_URL = "http://localhost:8000/";
 // PIZZAS
 // ----------------------------------------------------------------
 
-// GET /pizzas — retourne la liste des pizzas
+// GET /pizzas
+// Retourne :
+// [{ id_pizza, nom_pizza, taille, prix, ingredients: [string] }]
 async function getAllpizzas() {
     // TODO: remplacer par :
     // const response = await fetch(API_URL + "pizzas");
@@ -21,36 +23,55 @@ async function getAllpizzas() {
 // COMMANDES
 // ----------------------------------------------------------------
 
-// POST /commande — envoie la commande au backend
-// Retourne : { success: true, id_commande: number }
+// POST /commande
+// Envoie :
+// {
+//   id_client : int,
+//   total     : float,
+//   lignes    : [{ id_pizza: int, quantite: int }]
+// }
+// Retourne : { success: true, id_commande: int }
 async function posterCommande(panier) {
+    const user = getUtilisateur();
+    const total = panier.reduce((sum, p) => sum + p.prix * p.quantite, 0);
+
+    const payload = {
+        id_client : user ? user.id_client : null,
+        total     : parseFloat(total.toFixed(2)),
+        lignes    : panier.map(p => ({ id_pizza: p.id_pizza, quantite: p.quantite }))
+    };
+
     // TODO: remplacer par :
     // const response = await fetch(API_URL + "commande", {
     //     method: "POST",
     //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(panier)
+    //     body: JSON.stringify(payload)
     // });
     // return await response.json();
-    console.log("Commande envoyée (mock) :", panier);
+    console.log("Commande envoyée (mock) :", payload);
     return Promise.resolve({ success: true, id_commande: Math.floor(Math.random() * 9000) + 1000 });
 }
 
-// GET /commande/:id — retourne le statut d'une commande
-// Retourne : { id_commande, statut: "Attente" | "Préparation" | "Cuisson" | "Terminé" }
+// GET /commande/:id
+// Retourne :
+// { id_commande, statut: "nouvelle" | "en cours" | "livrée" | "annulée" }
 async function getStatutCommande(id_commande) {
     // TODO: remplacer par :
     // const response = await fetch(API_URL + "commande/" + id_commande);
     // return await response.json();
-    return Promise.resolve({ id_commande, statut: "En préparation" });
+    return Promise.resolve({ id_commande, statut: "nouvelle" });
 }
 
 // ----------------------------------------------------------------
 // AUTHENTIFICATION
 // ----------------------------------------------------------------
 
-// POST /login — connecte l'utilisateur
-// Retourne : { success: true, utilisateur: { nom, email, token } }
-//          | { success: false, message: string }
+// POST /login
+// Envoie  : { email, password }
+// Retourne si succès :
+// { success: true, utilisateur: { id_client, nom, prenom, email, telephone, adresse, token } }
+// Retourne si échec :
+// { success: false, message: string }
 async function login(email, password) {
     // TODO: remplacer par :
     // const response = await fetch(API_URL + "login", {
@@ -60,28 +81,36 @@ async function login(email, password) {
     // });
     // return await response.json();
     if (email && password) {
-        const nom = email.split("@")[0];
         return Promise.resolve({
             success: true,
-            utilisateur: { nom, email, token: "mock-token-" + Date.now() }
+            utilisateur: {
+                id_client : 1,
+                nom       : email.split("@")[0],
+                prenom    : "",
+                email,
+                telephone : "",
+                adresse   : "",
+                token     : "mock-token-" + Date.now()
+            }
         });
     }
     return Promise.resolve({ success: false, message: "Email ou mot de passe incorrect" });
 }
 
-// POST /register — inscrit un nouvel utilisateur
-// Retourne : { success: true }
-//          | { success: false, message: string }
-async function register(nom, email, password) {
+// POST /register
+// Envoie  : { nom, prenom, email, password, telephone, adresse }
+// Retourne si succès : { success: true }
+// Retourne si échec  : { success: false, message: string }
+async function register(nom, prenom, email, password, telephone, adresse) {
     // TODO: remplacer par :
     // const response = await fetch(API_URL + "register", {
     //     method: "POST",
     //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ nom, email, password })
+    //     body: JSON.stringify({ nom, prenom, email, password, telephone, adresse })
     // });
     // return await response.json();
-    if (nom && email && password) {
+    if (nom && prenom && email && password) {
         return Promise.resolve({ success: true });
     }
-    return Promise.resolve({ success: false, message: "Tous les champs sont obligatoires" });
+    return Promise.resolve({ success: false, message: "Les champs nom, prénom, email et mot de passe sont obligatoires" });
 }

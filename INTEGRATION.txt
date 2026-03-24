@@ -1,9 +1,10 @@
 ================================================================
 GUIDE D'INTEGRATION BACKEND - La Bella Pizza
+Base de données : labview_db (MySQL)
 ================================================================
 
 FICHIER A MODIFIER : Public Content/js/route.js
-(C'est le seul fichier a toucher pour brancher le backend)
+(C'est le seul fichier à toucher pour brancher le backend)
 
 ----------------------------------------------------------------
 ETAPE 1 — Configurer l'URL du serveur LabVIEW
@@ -17,66 +18,120 @@ Par l'IP de la machine LabVIEW :
 
 
 ----------------------------------------------------------------
-ETAPE 2 — Endpoints a implementer cote LabVIEW
+ETAPE 2 — Endpoints à implémenter côté LabVIEW
 ----------------------------------------------------------------
 
-GET  /pizzas
-    Retourne la liste des pizzas au format JSON :
+GET /pizzas
+    Requête SQL :
+        SELECT p.id_pizza, p.nom_pizza, p.taille, p.prix,
+               GROUP_CONCAT(i.nom_ingredient SEPARATOR ', ') AS ingredients
+        FROM pizza p
+        LEFT JOIN pizza_ingredient pi ON p.id_pizza = pi.id_pizza
+        LEFT JOIN ingredient i ON pi.id_ingredient = i.id_ingredient
+        GROUP BY p.id_pizza;
+
+    Retourne JSON :
     [
         {
-            "id_pizza": 1,
-            "nom_pizza": "Margherita",
-            "taille": "Medium",
-            "prix": 10.50,
-            "ingredients": "Sauce tomate, Mozzarella, Basilic"
+            "id_pizza"   : 1,
+            "nom_pizza"  : "Margherita",
+            "taille"     : "S",
+            "prix"       : 6.50,
+            "ingredients": "Sauce tomate, Fromage, Basilic"
         },
         ...
     ]
-    Note : ingredients peut etre une chaine de caracteres ou un tableau.
+
+----------------------------------------------------------------
 
 POST /commande
-    Recoit la commande au format JSON :
-    [
-        {
-            "id_pizza": 1,
-            "nom_pizza": "Margherita",
-            "taille": "Medium",
-            "prix": 10.50,
-            "ingredients": [...],
-            "quantite": 2
-        },
-        ...
-    ]
-    Retourne :
-    { "success": true, "id_commande": 1234 }
+    Reçoit JSON :
+    {
+        "id_client" : 1,
+        "total"     : 25.50,
+        "lignes"    : [
+            { "id_pizza": 2, "quantite": 2 },
+            { "id_pizza": 5, "quantite": 1 }
+        ]
+    }
+
+    Requêtes SQL à exécuter :
+        1. INSERT INTO commande (date_commande, heure_commande, statut, total, id_client)
+           VALUES (CURDATE(), CURTIME(), 'nouvelle', <total>, <id_client>);
+
+        2. Pour chaque ligne :
+           INSERT INTO ligne_commande (id_commande, id_pizza, quantite)
+           VALUES (<id_commande_genere>, <id_pizza>, <quantite>);
+
+    Retourne JSON :
+    { "success": true, "id_commande": 10 }
+
+----------------------------------------------------------------
 
 POST /login
-    Recoit :
-    { "email": "...", "password": "..." }
-    Retourne si succes :
-    { "success": true, "utilisateur": { "nom": "...", "email": "...", "token": "..." } }
-    Retourne si echec :
+    Reçoit JSON :
+    { "email": "jean.dupont@gmail.com", "password": "pass123" }
+
+    Requête SQL :
+        SELECT id_client, nom, prenom, email, telephone, adresse
+        FROM client
+        WHERE email = <email> AND password = <password>;
+
+    Retourne si succès :
+    {
+        "success"     : true,
+        "utilisateur" : {
+            "id_client" : 1,
+            "nom"       : "Dupont",
+            "prenom"    : "Jean",
+            "email"     : "jean.dupont@gmail.com",
+            "telephone" : "0612345678",
+            "adresse"   : "Paris",
+            "token"     : "..."
+        }
+    }
+
+    Retourne si échec :
     { "success": false, "message": "Email ou mot de passe incorrect" }
 
-POST /register
-    Recoit :
-    { "nom": "...", "email": "...", "password": "..." }
-    Retourne si succes :
-    { "success": true }
-    Retourne si echec :
-    { "success": false, "message": "..." }
+----------------------------------------------------------------
 
-GET  /commande/:id
-    Retourne le statut d'une commande :
-    { "id_commande": 1234, "statut": "Attente" }
-    Valeurs possibles pour statut : Attente | Preparation | Cuisson | Termine
+POST /register
+    Reçoit JSON :
+    {
+        "nom"       : "Dupont",
+        "prenom"    : "Jean",
+        "email"     : "jean.dupont@gmail.com",
+        "password"  : "pass123",
+        "telephone" : "0612345678",
+        "adresse"   : "Paris"
+    }
+
+    Requête SQL :
+        INSERT INTO client (nom, prenom, telephone, email, adresse, password)
+        VALUES (<nom>, <prenom>, <telephone>, <email>, <adresse>, <password>);
+
+    Retourne :
+    { "success": true }
+
+----------------------------------------------------------------
+
+GET /commande/:id
+    Requête SQL :
+        SELECT id_commande, statut FROM commande WHERE id_commande = <id>;
+
+    Retourne :
+    { "id_commande": 10, "statut": "nouvelle" }
+
+    Valeurs possibles pour statut (table commande) :
+        nouvelle | en cours | livrée | annulée
 
 
 ----------------------------------------------------------------
 ETAPE 3 — Remplacer les mocks dans route.js
 ----------------------------------------------------------------
 
-Pour chaque fonction, decommenter le bloc fetch() et supprimer
+Pour chaque fonction, décommenter le bloc fetch() et supprimer
 la ligne Promise.resolve(...).
 
 Exemple pour getAllpizzas() :
@@ -84,17 +139,17 @@ Exemple pour getAllpizzas() :
     AVANT (mock) :
         return Promise.resolve(PIZZAS_MOCK);
 
-    APRES (reel) :
+    APRÈS (réel) :
         const response = await fetch(API_URL + "pizzas");
         return await response.json();
 
 
 ----------------------------------------------------------------
-ETAPE 4 — CORS (si probleme de connexion)
+ETAPE 4 — CORS (si problème de connexion)
 ----------------------------------------------------------------
 
-Si le navigateur bloque les requetes, ajouter dans LabVIEW
-les headers HTTP suivants dans chaque reponse :
+Si le navigateur bloque les requêtes, ajouter dans LabVIEW
+les headers HTTP suivants dans chaque réponse :
 
     Access-Control-Allow-Origin: *
     Access-Control-Allow-Methods: GET, POST
@@ -102,12 +157,14 @@ les headers HTTP suivants dans chaque reponse :
 
 
 ----------------------------------------------------------------
-RESUME
+STRUCTURE BASE DE DONNEES (labview_db)
 ----------------------------------------------------------------
 
-1. Changer API_URL dans route.js
-2. Implementer les endpoints dans LabVIEW (GET /pizzas, POST /commande, POST /login, POST /register)
-3. Decommenter les fetch() dans route.js
-4. Tester chaque endpoint
+client         : id_client, nom, prenom, telephone, email, adresse, password
+pizza          : id_pizza, nom_pizza, taille (S/M/L), prix
+ingredient     : id_ingredient, nom_ingredient
+pizza_ingredient : id_pizza, id_ingredient
+commande       : id_commande, date_commande, heure_commande, statut, total, id_client
+ligne_commande : id_commande, id_pizza, quantite
 
 ================================================================

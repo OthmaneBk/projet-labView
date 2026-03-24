@@ -66,6 +66,41 @@
         <div id="confirmation" class="confirmation hidden">
             <p class="confirmation-text">Votre commande a été passée avec succès !</p>
             <p class="confirmation-id">Numéro de commande : <span id="id-commande"></span></p>
+
+            <div class="recap-commande">
+                <div class="recap-meta">
+                    <div class="recap-meta-item">
+                        <span class="recap-label">Date</span>
+                        <span id="recap-date" class="recap-value"></span>
+                    </div>
+                    <div class="recap-meta-item">
+                        <span class="recap-label">Heure</span>
+                        <span id="recap-heure" class="recap-value"></span>
+                    </div>
+                    <div class="recap-meta-item">
+                        <span class="recap-label">Client</span>
+                        <span id="recap-client" class="recap-value"></span>
+                    </div>
+                </div>
+
+                <table class="recap-table">
+                    <thead>
+                        <tr>
+                            <th>Pizza</th>
+                            <th>Taille</th>
+                            <th>Qté</th>
+                            <th>Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recap-tbody"></tbody>
+                </table>
+
+                <div class="recap-total">
+                    <span>Total</span>
+                    <span id="recap-total"></span>
+                </div>
+            </div>
+
             <div class="livraison-banner">
                 <span class="livraison-icon">🚚</span>
                 <div>

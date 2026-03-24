@@ -95,6 +95,16 @@ body {
 }
 
 /* Form */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.required {
+    color: #e74c3c;
+}
+
 .form-group {
     margin-bottom: 18px;
 }
