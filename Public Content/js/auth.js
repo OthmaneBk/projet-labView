@@ -56,7 +56,8 @@ async function handleLogin(e) {
 
     if (result.success) {
         localStorage.setItem("utilisateur", JSON.stringify(result.utilisateur));
-        window.location.href = "home.html";
+        const panier = JSON.parse(localStorage.getItem("panier")) || [];
+        window.location.href = panier.length > 0 ? "validation.html" : "home.html";
     } else {
         afficherErreur(result.message || "Email ou mot de passe incorrect");
     }

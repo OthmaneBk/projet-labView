@@ -14,6 +14,12 @@ function sauvegarderEtRediriger() {
     });
 
     localStorage.setItem('panier', JSON.stringify(panier));
+
+    if (!estConnecte()) {
+        document.location.href = "login.html";
+        return;
+    }
+
     document.location.href = "validation.html";
 }
 
