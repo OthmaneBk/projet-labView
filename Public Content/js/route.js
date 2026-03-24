@@ -73,28 +73,12 @@ async function getStatutCommande(id_commande) {
 // Retourne si échec :
 // { success: false, message: string }
 async function login(email, password) {
-    // TODO: remplacer par :
-    // const response = await fetch(API_URL + "login", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ email, password })
-    // });
-    // return await response.json();
-    if (email && password) {
-        return Promise.resolve({
-            success: true,
-            utilisateur: {
-                id_client : 1,
-                nom       : email.split("@")[0],
-                prenom    : "",
-                email,
-                telephone : "",
-                adresse   : "",
-                token     : "mock-token-" + Date.now()
-            }
-        });
-    }
-    return Promise.resolve({ success: false, message: "Email ou mot de passe incorrect" });
+    const response = await fetch("http://172.20.10.3:8000/clients/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    });
+    return await response.json();
 }
 
 // POST /register
@@ -102,15 +86,10 @@ async function login(email, password) {
 // Retourne si succès : { success: true }
 // Retourne si échec  : { success: false, message: string }
 async function register(nom, prenom, email, password, telephone, adresse) {
-    // TODO: remplacer par :
-    // const response = await fetch(API_URL + "register", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ nom, prenom, email, password, telephone, adresse })
-    // });
-    // return await response.json();
-    if (nom && prenom && email && password) {
-        return Promise.resolve({ success: true });
-    }
-    return Promise.resolve({ success: false, message: "Les champs nom, prénom, email et mot de passe sont obligatoires" });
+    const response = await fetch("http://172.20.10.3:8000/clients/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nom, prenom, telephone, email, adresse, password })
+    });
+    return await response.json();
 }
